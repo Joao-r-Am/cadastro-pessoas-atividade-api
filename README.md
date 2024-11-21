@@ -2,7 +2,7 @@
 
 - Projeto fullstack para cadastro de usuários, atividades, e sistema de autenticação.
 
-### Para iniciar o projeto inicie o projeto da api [link] e execute os seguintes comandos:
+### Para iniciar o projeto inicie o projeto da  <a href="https://github.com/Joao-r-Am/cadastro-pessoas-atividade-api"><api/a> e execute os seguintes comandos:
 
     npm i // instalar todos os pacotes do projeto
     npx sequelize-cli init //  migração do bd
