@@ -10,14 +10,13 @@ export const createTask = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   try {
-    const userId = req.url.slice(8);
     const task = req.body;
-
-    taskService.createTask(task, userId);
+    await taskService.createTask(task, task.userId);
     res.status(201).json({ message: "atividade criado com sucesso!", task });
-  } catch (err) {
+  } catch (err: any) {
+    res.status(400).json({ error: err });
     next(err);
   }
 };
@@ -39,7 +38,8 @@ export const getAllTasks = async (
       res.status(400).json({ error: "tarefas não encontradas." });
     }
     res.status(200).json({ tasks });
-  } catch (err) {
+  } catch (err: any) {
+    res.status(400).json({ error: err.message });
     next(err);
   }
 };

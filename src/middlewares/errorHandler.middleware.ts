@@ -8,7 +8,7 @@ export const errorHandler = async (
 ) => {
   try {
     const statusCode = err.statusCode || 500;
-    const message = err.message || "erro interno do servidor";
+    const message = err.message || "erro interno do servidor.";
     console.error(`[error] ${statusCode}: ${message}`);
 
     res.status(statusCode).json({

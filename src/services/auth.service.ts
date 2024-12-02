@@ -4,7 +4,9 @@ import { generateToken } from "../utils/generateToken";
 class AuthService {
   async login(email: string, senha: string) {
     try {
-      if (!email || !senha) throw new Error(`verifique as informações.`);
+      if (email.length < 1 || senha.length < 1) {
+        throw { message: `verifique as informações.` };
+      }
       const user = await UserModel.findOne({
         where: {
           email,
@@ -14,7 +16,7 @@ class AuthService {
       const token = generateToken(user?.id!);
       return { user, token };
     } catch (err) {
-      throw new Error(`erro ao criar usuario: ${err}`);
+      throw err;
     }
   }
 }

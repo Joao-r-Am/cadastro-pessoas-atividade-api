@@ -8,7 +8,7 @@ module.exports = {
         id: "ddcd79d5-e951-45cf-ac02-b852b7cd688a",
         nome: "user",
         senha: "123456",
-        telefone: "41999999999",
+        telefone: 41999999999,
         email: "user@email.com",
         rua: "rua xxx",
         numero: 100,
@@ -21,6 +21,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("Users", null, {});
+    return queryInterface.bulkDelete("users", null, {});
   },
 };

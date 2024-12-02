@@ -1,0 +1,18 @@
+version: "3.9" # Versão do docker-compose
+
+services:
+  postgres:
+    image: postgres:17 # Versão do PostgreSQL
+    container_name: my_postgres_db
+    environment:
+      POSTGRES_USER: admin # Usuário padrão
+      POSTGRES_PASSWORD: admin # Senha padrão
+      POSTGRES_DB: cadastros # Nome do banco de dados padrão
+    ports:
+      - "5432:5432" # Porta exposta (host:container)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persistência de dados
+
+volumes:
+  postgres_data:
+    driver: local

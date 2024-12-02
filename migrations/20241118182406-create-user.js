@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       telefone: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
       },
       email: {
         type: Sequelize.STRING,
@@ -28,7 +28,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       numero: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
       },
       complemento: {
         type: Sequelize.STRING,

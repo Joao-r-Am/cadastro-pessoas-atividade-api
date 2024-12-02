@@ -3,7 +3,6 @@ import userRoutes from "./user.routes";
 import taskRoutes from "./task.routes";
 import { login } from "../controllers/auth.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
-import { errorHandler } from "../middlewares/errorHandler.middleware";
 
 const router = Router();
 const app = express();

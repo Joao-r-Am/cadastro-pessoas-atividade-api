@@ -1,6 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import UserModel from "../models/user.model";
 import UserService from "../services/user.service";
+import { plainToClass } from "class-transformer";
+import { CreateUserDto } from "../dto/user.dto";
+import { json } from "body-parser";
 
 const userService = new UserService();
 
@@ -11,22 +14,10 @@ export const createUser = async (
 ): Promise<void> => {
   try {
     const user = req.body;
-
-    const checkEmail = await userService.findUserByEmail(user.email);
-
-    if (checkEmail?.email === user.email) {
-      res.status(400).json({ error: "email já cadastrado." });
-      return;
-    }
-
-    if (!user) {
-      res.status(400).json({ error: "cheque as informações." });
-      return;
-    }
-
     await userService.createUser(user);
     res.status(201).json({ message: "usuário criado.", user: user });
-  } catch (err) {
+  } catch (err: any) {
+    res.status(400).json({ error: err.message });
     next(err);
   }
 };
@@ -39,7 +30,8 @@ export const getAllUsers = async (
   try {
     const users = await userService.findAllUsersService();
     res.status(200).json(users);
-  } catch (err) {
+  } catch (err: any) {
+    res.status(400).json({ error: err.message });
     next(err);
   }
 };
@@ -53,7 +45,8 @@ export const getOneUser = async (
   try {
     const user = await userService.findOneUser(id);
     res.status(200).json(user);
-  } catch (err) {
+  } catch (err: any) {
+    res.status(400).json({ error: err.message });
     next(err);
   }
 };

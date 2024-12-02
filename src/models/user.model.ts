@@ -34,26 +34,51 @@ UserModel.init(
     nome: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: { msg: "nome de usuário inválido." },
+        len: { args: [3, 50], msg: "nome deve ter pelo menos 3 caracteres." },
+      },
     },
     senha: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: { msg: "senha inválida." },
+        len: { args: [6, 99], msg: "senha deve ter pelo menos 6 caracteres." },
+      },
     },
     telefone: {
       type: DataTypes.BIGINT,
       allowNull: false,
+      validate: {
+        notNull: { msg: "telefone inválido." },
+        len: {
+          args: [9, 12],
+          msg: "telefone deve ter pelo menos 9 caracteres.",
+        },
+      },
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isEmail: { msg: "formato de email inválido." },
+      },
     },
     rua: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: { msg: "rua inválida." },
+        len: { args: [3, 50], msg: "rua deve ter pelo menos 3 caracteres." },
+      },
     },
     numero: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: { msg: "numero inválido." },
+      },
     },
     complemento: {
       type: DataTypes.STRING,
@@ -61,6 +86,10 @@ UserModel.init(
     cidade: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: { msg: "cidade inválida." },
+        len: { args: [2, 50], msg: "rua deve ter pelo menos 3 caracteres." },
+      },
     },
   },
   {
