@@ -4,7 +4,6 @@ import UserService from "../services/user.service";
 import TaskService from "../services/task.service";
 
 const taskService = new TaskService();
-const userService = new UserService();
 
 export const createTask = async (
   req: Request,
@@ -27,16 +26,8 @@ export const getAllTasks = async (
   next: NextFunction
 ): Promise<any> => {
   const userId = req.url.slice(1);
-  const checkUser = userService.findOneUserService(userId);
   try {
-    if (!userId || !checkUser) {
-      res.status(400).json({ error: "usuário inválido." });
-    }
     const tasks = await taskService.getAllTasks(userId);
-
-    if (!tasks) {
-      res.status(400).json({ error: "tarefas não encontradas." });
-    }
     res.status(200).json({ tasks });
   } catch (err: any) {
     res.status(400).json({ error: err.message });

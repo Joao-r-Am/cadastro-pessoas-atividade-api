@@ -1,4 +1,7 @@
 import TaskModel from "../models/task.model";
+import UserService from "./user.service";
+
+const userService = new UserService();
 
 class TaskService {
   async createTask(task: TaskModel, userId: string) {
@@ -15,6 +18,11 @@ class TaskService {
 
   async getAllTasks(userId: string) {
     try {
+      const checkUser = await userService.findOneUserService(userId);
+
+      if (!userId || !checkUser) {
+        throw { error: "usuário inválido." };
+      }
       if (!userId) {
         throw { message: "erro ao carregar dados do usuário." };
       }
@@ -24,13 +32,17 @@ class TaskService {
         },
       });
 
+      if (!tasks) {
+        throw { error: "tarefas não encontradas." };
+      }
+
       if (tasks.length < 1) {
         throw { message: "não há tarefas." };
       }
 
       return tasks;
-    } catch (err) {
-      throw err;
+    } catch (err: any) {
+      throw err.errors[0].message;
     }
   }
 }
