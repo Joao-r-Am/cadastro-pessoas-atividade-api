@@ -10,13 +10,13 @@ export const login = async (
 ): Promise<any> => {
   const { email, senha } = req.body;
   try {
-    const { user, token } = await authService.login(email, senha);
+    const { userReturn, token } = await authService.login(email, senha);
 
-    if (!user) {
+    if (!userReturn) {
       return res.status(401).json({ error: "usuário ou senha incorretos" });
     }
     req.headers["authorization"] = token;
-    return res.status(200).json({ token });
+    return res.status(200).json({ token, userReturn });
   } catch (err: any) {
     return res.status(400).json({ error: err.message });
   }
