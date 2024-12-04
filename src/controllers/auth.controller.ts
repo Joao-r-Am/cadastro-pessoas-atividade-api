@@ -18,6 +18,6 @@ export const login = async (
     req.headers["authorization"] = token;
     return res.status(200).json({ token, userReturn });
   } catch (err: any) {
-    return res.status(400).json({ error: err.message });
+    return res.status(400).json({ error: err });
   }
 };

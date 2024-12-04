@@ -1,10 +1,19 @@
-import { error } from "console";
 import UserModel from "../models/user.model";
-import { CreateUserDto } from "../dto/user.dto";
-import { Optional } from "sequelize";
+import { encrypt } from "../utils/bcrypt";
+
+interface NewUser {
+  nome: string;
+  senha: string;
+  telefone: number;
+  email: string;
+  rua: string;
+  numero: number;
+  complemento: string | null;
+  cidade: string;
+}
 
 class UserService {
-  async createUser(user: UserModel) {
+  async createUser(user: NewUser) {
     try {
       const checkEmail = await this.findUserByEmail(user.email);
       if (checkEmail) {
@@ -17,9 +26,19 @@ class UserService {
           message: "cheque as informações.",
         };
       }
-      const newUser = await UserModel.create(user);
-      return newUser;
+      const createUser: NewUser = {
+        nome: user.nome,
+        senha: (await encrypt(user.senha)).toString(),
+        telefone: user.telefone,
+        email: user.email,
+        rua: user.rua,
+        numero: user.numero,
+        complemento: user.complemento,
+        cidade: user.cidade,
+      };
+      return await UserModel.create(createUser);
     } catch (err) {
+      console.log(err);
       throw err;
     }
   }

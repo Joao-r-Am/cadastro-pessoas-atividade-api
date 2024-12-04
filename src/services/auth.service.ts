@@ -1,5 +1,6 @@
 import UserModel from "../models/user.model";
 import { generateToken } from "../utils/generateToken";
+import { comparePassword } from "../utils/bcrypt";
 
 interface UserReturn {
   id: string;
@@ -17,24 +18,24 @@ class AuthService {
       const user = await UserModel.findOne({
         where: {
           email,
-          senha,
         },
       });
+      const checkPassword = await comparePassword(senha, user!.senha);
 
-      if (!user) {
+      if (!checkPassword) {
         throw { error: "usuário ou senha incorretos" };
       }
 
       const userReturn: UserReturn = {
-        id: user!.id,
+        id: user!.id!,
         nome: user!.nome,
         telefone: user!.telefone,
         email: user!.email,
       };
       const token = generateToken(user?.id!);
       return { userReturn, token };
-    } catch (err) {
-      throw err;
+    } catch (err: any) {
+      throw err.error;
     }
   }
 }
